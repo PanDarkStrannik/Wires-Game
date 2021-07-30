@@ -28,6 +28,14 @@ namespace Contact
         private ContactBehaviour _startLineContact = null;
         private ContactBehaviour _endLineContact = null;
 
+        //public void SetLineContact(ContactBehaviour contactBehaviour)
+        //{
+        //    if (_startLineContact == null)
+        //        SetStartLineContact(contactBehaviour);
+        //    else if (_startLineContact != contactBehaviour && _startLineContact != null)
+        //        SetEndLineContact(contactBehaviour);
+        //}
+
         public void SetStartLineContact(ContactBehaviour contactBehaviour)
         {
             if (_startLineContact == null)
@@ -44,18 +52,22 @@ namespace Contact
             {
                 _endLineContact = contactBehaviour;
 
-                OnContactEnd?.Invoke();
+            if (_startLineContact.ContactData.GetColor == _endLineContact.ContactData.GetColor)
+                OnContactSucsess?.Invoke();
+            else
+                OnContactFailed?.Invoke();
 
-                if (_startLineContact.ContactData.GetColor == _endLineContact.ContactData.GetColor)
-                    OnContactSucsess?.Invoke();
-                else
-                    OnContactFailed?.Invoke();
+            ClearContact();
 
-                _startLineContact = null;
-                _endLineContact = null;
-
-                Debug.Log("Установили конечную позицию линии");
+            Debug.Log("Установили конечную позицию линии");
             }
+        }
+
+        public void ClearContact()
+        {
+            _startLineContact = null;
+            _endLineContact = null;
+            OnContactEnd?.Invoke();
         }
     }
 }

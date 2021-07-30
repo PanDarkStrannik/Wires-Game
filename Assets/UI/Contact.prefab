@@ -60,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _contactData: {fileID: 11400000, guid: b605270cde45cbb428bd3428c1882188, type: 2}
   _targetImage: {fileID: 5839692836967854520}
+  _rectTransform: {fileID: 5839692836967854521}
 --- !u!114 &5839692836967854520
 MonoBehaviour:
   m_ObjectHideFlags: 0
