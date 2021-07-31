@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3869ab85fcc2f459c5fadcc823cd2f, type: 3}
+  m_Name: Contact Database
+  m_EditorClassIdentifier: 
+  _database:
+  - _contactType: 1
+    _contactsDatas:
+    - {fileID: 11400000, guid: b605270cde45cbb428bd3428c1882188, type: 2}
+    - {fileID: 11400000, guid: 7e5d80398c33fb0498683d668060d7b8, type: 2}
+    - {fileID: 11400000, guid: 0226ae8f2eaff0047bb0d1bbb9969bca, type: 2}
+    - {fileID: 11400000, guid: 1816533d2dd0f5b40a52e01407f33a3a, type: 2}
+  - _contactType: 0
+    _contactsDatas:
+    - {fileID: 11400000, guid: b605270cde45cbb428bd3428c1882188, type: 2}
+    - {fileID: 11400000, guid: 7e5d80398c33fb0498683d668060d7b8, type: 2}
+    - {fileID: 11400000, guid: 0226ae8f2eaff0047bb0d1bbb9969bca, type: 2}
+    - {fileID: 11400000, guid: 1816533d2dd0f5b40a52e01407f33a3a, type: 2}

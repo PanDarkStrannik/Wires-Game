@@ -8,7 +8,7 @@ namespace Contact
         public event Action OnContactStart;
         public event Action OnContactEnd;
         public event Action OnContactFailed;
-        public event Action OnContactSucsess;
+        public event Action<ContactBehaviour,ContactBehaviour> OnContactSucsess;
 
         public ContactBehaviour StartLineContact
         {
@@ -28,14 +28,6 @@ namespace Contact
         private ContactBehaviour _startLineContact = null;
         private ContactBehaviour _endLineContact = null;
 
-        //public void SetLineContact(ContactBehaviour contactBehaviour)
-        //{
-        //    if (_startLineContact == null)
-        //        SetStartLineContact(contactBehaviour);
-        //    else if (_startLineContact != contactBehaviour && _startLineContact != null)
-        //        SetEndLineContact(contactBehaviour);
-        //}
-
         public void SetStartLineContact(ContactBehaviour contactBehaviour)
         {
             if (_startLineContact == null)
@@ -48,14 +40,14 @@ namespace Contact
 
         public void SetEndLineContact(ContactBehaviour contactBehaviour)
         {
-            if (_startLineContact != contactBehaviour && _startLineContact != null)
+            if (_startLineContact != null && _startLineContact.ContactType != contactBehaviour.ContactType)
             {
                 _endLineContact = contactBehaviour;
 
-            if (_startLineContact.ContactData.GetColor == _endLineContact.ContactData.GetColor)
-                OnContactSucsess?.Invoke();
-            else
-                OnContactFailed?.Invoke();
+                if (_startLineContact.ContactData.GetColor == _endLineContact.ContactData.GetColor)
+                    OnContactSucsess?.Invoke(_startLineContact, _endLineContact);
+                else
+                    OnContactFailed?.Invoke();
 
             ClearContact();
 

@@ -9,6 +9,7 @@ namespace Contact
     public class ContactLineDrawer : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         [SerializeField] private LineRenderer _dottedLine;
+        [SerializeField] private LineRenderer _contactLinePrefab;
         //[SerializeField,Min(2)] private int _maxDots = 2;
 
         private bool _haveContact = false;
@@ -18,7 +19,6 @@ namespace Contact
         private void Start()
         {
             _dottedLineDefaultColor = _dottedLine.startColor;
-            //_dottedLine.positionCount = _maxDots;
 
             _lineBehaviour = Singleton<ContactLineBehaviour>.Instance;
             _lineBehaviour.OnContactStart += Instance_OnContactStart;
@@ -48,13 +48,17 @@ namespace Contact
             _dottedLine.SetPosition(0, startLineContactPostion);
             _dottedLine.SetPosition(_dottedLine.positionCount - 1, startLineContactPostion);
 
-            //float width = _dottedLine.startWidth;
-            //_dottedLine.material.mainTextureScale = new Vector2(1f / width, 1.0f);
         }
 
-        private void OnContactSucsess()
+        private void OnContactSucsess(ContactBehaviour _startContact, ContactBehaviour _endContact)
         {
             ClearDottedLine();
+            var contactLine = Instantiate(_contactLinePrefab, _startContact.transform);
+            contactLine.positionCount = 2;
+            contactLine.startColor = _startContact.ContactData.GetColor;
+            contactLine.endColor = _endContact.ContactData.GetColor;
+            contactLine.SetPosition(0, _startContact.RectTransform.position);
+            contactLine.SetPosition(1, _endContact.RectTransform.position);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -66,14 +70,6 @@ namespace Contact
                 var pointerPosition = eventData.pointerCurrentRaycast.worldPosition;
 
                 pointerPosition.z = 0;
-                //var offset = Vector3.Distance(pointerPosition, _dottedLine.GetPosition(0)) / _maxDots;
-
-                //for (int i = 1; i < _dottedLine.positionCount; i++)
-                //{
-                //    var direction = Vector3.Normalize(pointerPosition - _dottedLine.GetPosition(i-1));
-                //    var newPos = new Vector3(direction.x + offset, direction.y + offset, 0);
-                //    _dottedLine.SetPosition(i, newPos);
-                //}
                 _dottedLine.SetPosition(_dottedLine.positionCount - 1, pointerPosition);
                 Debug.Log("Что-то работает!");
             }
@@ -88,16 +84,5 @@ namespace Contact
                 _lineBehaviour.ClearContact();
             }
         }
-
-        //private void LateUpdate()
-        //{
-        //    if (_haveContact)
-        //    {
-        //        var pointerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //        pointerPosition.z = 0;
-        //        _dottedLine.SetPosition(_dottedLine.positionCount - 1, pointerPosition);
-        //        Debug.Log("Что-то работает!");
-        //    }
-        //}
     }
 }
